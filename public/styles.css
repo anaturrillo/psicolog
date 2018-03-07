@@ -10,3 +10,17 @@ div#cargarPaciente {
     position: absolute;
     top: 60px;
 }
+
+#error {
+    color: red;
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-color: lightgoldenrodyellow;
+    z-index: 999;
+    display: none;
+}
