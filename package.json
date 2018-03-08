@@ -4,6 +4,7 @@
   "description": "web app for pacient loggin",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "express": "^4.16.2"
   },
   "devDependencies": {},

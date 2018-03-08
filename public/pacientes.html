@@ -1,0 +1,50 @@
+<html>
+<head>
+    <link href="styles/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+    <body>
+
+        <div id="wrapper">
+            <div class="loader"></div>
+            <div id="error">UPS, HUBO UN ERROR!!</div>
+
+            <div id="content" class="hidden">
+                <button mostrarPacientes>Ver todos los pacientes</button>
+                <button mostrarPacientesDelDia>Ver los pacientes que vienen hoy</button>
+                <button cargarPaciente>Agregar paciente</button>
+
+                <div id="cargarPaciente">
+                    <p>Agregar un paciente</p>
+                    <form id="cargarPacienteForm">
+                        <input type="text" placeholder="Nombre">
+                        <input type="text" placeholder="Apellido">
+                        <input type="text" placeholder="Obra social">
+                        <input type="number" placeholder="Cantidad de sesiones">
+                        <select name="day">
+                            <option value="lunes" name="lunes">lunes</option>
+                            <option value="martes" name="martes">martes</option>
+                            <option value="miercoles" name="miercoles">miercoles</option>
+                            <option value="jueves" name="jueves">jueves</option>
+                            <option value="viernes" name="viernes">viernes</option>
+                            <option value="sabado" name="sabado">sabado</option>
+                        </select>
+                        <button type="submit" >Agregar</button>
+                    </form>
+
+                </div>
+                <div class="listaDePacientes">
+                    lkasljdaksnknasda
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="scripts/scripts.js"></script>
+    </body>
+</html>

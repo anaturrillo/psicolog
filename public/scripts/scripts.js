@@ -8,11 +8,20 @@ $(document).ready(function () {
     })
   };
 
+  const toLoggIn = function () {
+    return window.location.href = url
+  };
+
   const token = document.cookie.token;
+  var validUser = false;
+
+
   const validateUser = function (token) {
     $.post(url + '/validateUser', {token:token}, function (data) {
       if (data.loggedIn) {
-        window.location.href = url + '/pacientes.html'
+        validUser = true;
+      } else {
+        toLoggIn()
       }
     })
       .fail(displayError)
@@ -20,25 +29,15 @@ $(document).ready(function () {
 
   if (token) {
     validateUser(token);
+  } else {
+    toLoggIn()
   }
 
-  $('#pwd').change(function (evt) {
-    const pwd = MD5(evt.target.value);
+  if (validUser) {
+    var pacientes = [];
 
-    $.post(url + '/validateUser', {pwd:pwd}, function () {
-      if (data.loggedIn) {
-        window.location.href = url + '/pacientes.html'
-      }
-    })
-      .fail(displayError);
-  });
+    const dibujarPacientes = function (pacientes) {
 
-
-
-  // mostrar pacientes
-  $('[mostrarPacientes]').click(function () {
-    event.preventDefault();
-    $.get(url + '/pacient', function (data) {
       $('#listaDePacientes').append('<table class="paciente">' +
         '<tr>' +
         '<th>Nombre</th>' +
@@ -49,48 +48,69 @@ $(document).ready(function () {
         '<th></th>' +
         '</tr>');
 
-      data.map(function (e) {
+      pacientes.map(function (e) {
         $('#listaDePacientes').append(
           '<tr>' +
           '<td>'+ e.name + '</td>' +
           '<td>'+ e.lastName + '</td>' +
           '<td>'+ e.totalSessions + '</td>' +
           '<td>'+ e.pendingSessions + '</td>' +
-          '<td>'+ e.sessionDay + '</td>' +
+          '<td>'+ e.day + '</td>' +
           '<td><button cargarSesion>Agregar sesion</button></td>' +
           ' </tr>')
       });
 
       $('#listaDePacientes').append('</table>')
 
+    };
+
+
+    $.get(url + '/pacient', function (data) {
+      pacientes = data;
+      dibujarPacientes(pacientes)
     })
       .fail(displayError)
 
 
-  });
+    $('[mostrarPacientes]').click(function (event) {
+      event.preventDefault();
+      dibujarPacientes(pacientes)
+    });
 
-  // mostrar pacientes del dia
-  $('[mostrarPacientesDelDia]').click(function () {
+    // mostrar pacientes del dia
+    $('[mostrarPacientesDelDia]').click(function (event) {
+      event.preventDefault();
 
-  });
+      dibujarPacientes(pacientes
+        .filter(function (paciente) {
+          const day = paciente.day;
+          const today = new Date();
+          const todayDay = today.getDay();
+          return day == todayDay;
+        }))
+    });
 
-  // cargar paciente
-  $('[cargarPaciente]').click(function () {
-    $('#cargarPaciente').slideToggle('slow')
-  });
-  
-  $('#cargarPacienteForm').submit(function (event) {
-    event.preventDefault();
-    $.post(url + '/pacient', function (data) {
-      // agergar paciente al DOM?
-      addPacient()
+    // cargar paciente
+    $('[cargarPaciente]').click(function () {
+      $('#cargarPaciente').slideToggle('slow')
+    });
+
+    $('#cargarPacienteForm').submit(function (event) {
+      event.preventDefault();
+      $.post(url + '/pacient', function (data) {
+        // agergar paciente al DOM?
+        addPacient()
+      })
+        .fail(displayError)
+    });
+
+    // cargar sesion
+    $('[cargarSesion]').click(function () {
+
     })
-      .fail(displayError)
-  });
+  } else {
+    validateUser(token)
+  }
 
-  // cargar sesion
-  $('[cargarSesion]').click(function () {
-
-  })
 
 });
