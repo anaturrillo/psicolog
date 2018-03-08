@@ -1,0 +1,12 @@
+div#cargarPaciente {
+    display: none;
+    background: white;
+    z-index: 99;
+    position: relative;
+    border: 1px dotted black;
+}
+
+.contenido {
+    position: absolute;
+    top: 60px;
+}

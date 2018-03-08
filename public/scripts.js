@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  $.get( 'http://localhost:5000/getPepe', function( data ) {
+  const url = 'http://localhost:5000';
+
+  $.get( url + '/getPepe', function( data ) {
     $( ".pacientes" ).html( data );
   });
 
@@ -15,8 +17,15 @@ $(document).ready(function () {
 
   // cargar paciente
   $('[cargarPaciente]').click(function () {
-
+    $('#cargarPaciente').slideToggle('slow', function () {
+      
+    })
   });
+  
+  $('#cargarPacienteForm').submit(function (event) {
+    event.preventDefault();
+    $.post(url + '/createPacient', )
+  })
 
   // cargar sesion
   $('[cargarSesion]').click(function () {
